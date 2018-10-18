@@ -4,6 +4,7 @@ A simple face detection tool constructed in order to be scalable ad distributed,
 
 ## Current state
 
+###
 
 ### Decoding of the streamed images
 In order to set up the stream we need to supply a decoder for the streamed images which complies with how the images are serialized in the producer. We should 1. get a producer running and 2. understand which serialization is used.
