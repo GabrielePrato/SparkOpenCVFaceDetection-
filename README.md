@@ -33,12 +33,20 @@ $KAFKA_HOME/bin/kafka-server-start.sh $KAFKA_HOME/config/server.properties
 
 ```
 
-- Run the kafka-picture-producer from the directory /packages/kafka-picture-producer/build/libs
+- Run the kafka-picture-producer
 (reading from /data/INRIAPerson/Train/pos)
+```
+go to:
+```
+/packages/kafka-picture-producer/build/libs
+```
+run
 ```
 java -jar kafka-picture-producer-0.1.0.jar --kafka.topic "images" --imagePath "../../data/INRIAPerson/Train/pos"
 ```
 This streams all images to the topic 'images'
 
-## Things to do
-
+## to do
+- get the producer to work
+- look into serialization/decoding of images
+- get the connection to spark up and running and show that images are streamed to spark. 
