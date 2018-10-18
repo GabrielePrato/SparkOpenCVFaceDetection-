@@ -45,8 +45,8 @@ run
 java -jar kafka-picture-producer-0.1.0.jar --kafka.topic "images" --imagePath "../../data/INRIAPerson/Train/pos"
 ```
 This streams all images to the topic 'images'
-
+```
 ## to do
 - get the producer to work
 - look into serialization/decoding of images
-- get the connection to spark up and running and show that images are streamed to spark. 
+- get the connection to spark up and running and show that images are streamed to spark.
