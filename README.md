@@ -29,13 +29,11 @@ $KAFKA_HOME/bin/kafka-server-start.sh $KAFKA_HOME/config/server.properties
 
 - Run Scala script with spark, reading images from topic `images`
 !! incomplete
-```
-
-```
 
 - Run the kafka-picture-producer
-(reading from /data/INRIAPerson/Train/pos)
-```
+
+In order to streama all images from folder `/data/INRIAPerson/Train/pos` to the topic `images`
+
 go to:
 ```
 /packages/kafka-picture-producer/build/libs
@@ -44,8 +42,7 @@ run
 ```
 java -jar kafka-picture-producer-0.1.0.jar --kafka.topic "images" --imagePath "../../data/INRIAPerson/Train/pos"
 ```
-This streams all images to the topic 'images'
-```
+
 ## to do
 - get the producer to work
 - look into serialization/decoding of images
