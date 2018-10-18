@@ -1,7 +1,7 @@
-## Gathering of useful resources
+## Useful resources
 
-Project which is similar to ours:
-https://www.infoq.com/articles/video-stream-analytics-opencv
+### Project which is similar to ours
+- https://www.infoq.com/articles/video-stream-analytics-opencv
 
 
 ### How to implement face detection with OpenCV and Scala:
