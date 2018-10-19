@@ -5,6 +5,7 @@ import org.apache.kafka.clients.consumer.ConsumerConfig
 import org.apache.kafka.common.serialization.StringDeserializer
 import org.apache.spark.streaming.kafka._
 import kafka.serializer.{DefaultDecoder, StringDecoder}
+import org.apache.kafka.common.serialization.{ByteArrayDeserializer}
 import org.apache.spark.SparkConf
 import org.apache.spark.streaming._
 import org.apache.spark.streaming.kafka._
@@ -46,10 +47,11 @@ object KafkaSpark {
 
     //// ?? We need to provide an image decoder, which complies wth how images are decoded in the producer.
     //// Should get the producer running and also look into how it works first
-    val messages = KafkaUtils.createDirectStream[String, String, StringDecoder, StringDecoder](ssc, kafkaConf, topic)
+    val messages = KafkaUtils.createDirectStream[String, Byte, StringDecoder, DefaultDecoder](ssc, kafkaConf, topic)
 
 
     // print something here to show that we are receiving images.. System.out.print("something")
+    System.out.println(messages(0))
 
 
     ssc.start()
