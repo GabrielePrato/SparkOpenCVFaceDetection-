@@ -4,7 +4,7 @@
 		module="face-detection-project_2.11"
 		revision="1.0"
 		status="integration"
-		publication="20181019174451"
+		publication="20181022185815"
 	>
 		<description>
 		Face Detection Project
@@ -33,9 +33,9 @@
 		<dependency org="org.scala-lang" name="scala-compiler" rev="2.11.8" conf="scala-tool->default,optional(default)"/>
 		<dependency org="org.scala-lang" name="scala-library" rev="2.11.8" conf="scala-tool->default,optional(default);compile->default(compile)"/>
 		<dependency org="org.apache.spark" name="spark-core_2.11" rev="2.2.1" conf="compile->default(compile)"/>
-		<dependency org="org.apache.spark" name="spark-sql_2.11" rev="2.2.1" conf="compile->default(compile)"/>
 		<dependency org="org.apache.spark" name="spark-streaming_2.11" rev="2.2.1" conf="compile->default(compile)"/>
 		<dependency org="org.apache.spark" name="spark-streaming-kafka-0-8_2.11" rev="2.2.1" conf="compile->default(compile)"/>
+		<dependency org="org.apache.spark" name="spark-streaming-kafka-0-10_2.11" rev="2.2.0" conf="compile->default(compile)"/>
 		<dependency org="com.datastax.spark" name="spark-cassandra-connector_2.11" rev="2.0.2" conf="compile->default(compile)">
 			<exclude org="io.netty" module="netty-handler" name="*" type="*" ext="*" conf="" matcher="exact"/>
 		</dependency>
