@@ -4,15 +4,33 @@ A simple face detection tool constructed in order to be scalable ad distributed,
 
 ## Current state
 
-### kafka-image-producer
-the producer has been built and us runnable according to below instructions. It creates a topic "images" but when consuming from images it is empty. We need to try to look closer into this, also in order to understand how images are serialized.
+- How do we load it to HDFS? Should we load all images file wise in byte format?
+
+- How do we read from? Can we somehow iterate over the files in the HDFS?
 
 
-### Decoding of the streamed images
-In order to set up the stream we need to supply a decoder for the streamed images which complies with how the images are serialized in the producer. We should 1. get a producer running and 2. understand which serialization is used.
+## How to run (new approach with HDFS)
+- Start nodes
+```
+$HADOOP_HOME/sbin/hadoop-daemon.sh start namenode
+$HADOOP_HOME/sbin/hadoop-daemon.sh start datanode
+```
+
+- Create directory /images in HDFS
+```
+$HADOOP_HOME/bin/hdfs dfs -ls /images
+```
+
+- Add images to hdfs/images
+```
+javac ImagesToHDFS.java -cp $HADOOP_CLASSPATH
+java ImagesToHDFS -cp $HADOOP_CLASSPATH
+```
 
 
-## How to run
+
+
+## How to run // OLD APPROACH WITH KAFKA
 
 - Start Zookeeper
 ```
@@ -40,7 +58,7 @@ go to:
 ```
 run
 ```
-java -jar kafka-picture-producer-0.1.0.jar --kafka.topic "images" --imagePath "../../data/INRIAPerson/Train/pos"
+java -jar kafka-picture-producer-0.1.0.jar -imagePath /Users/philipclaesson/ML/DIC/project/data/INRIAPerson/Train/pos --kafka.topic "images"
 ```
 
 ## to do

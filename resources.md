@@ -9,7 +9,9 @@
 
 - https://github.com/informramiz/Face-Detection-OpenCV
 
-### How do create image stream from folder w. Kafka
+### How to create image stream from folder w. Kafka
 
 - https://github.com/lopitz/kafka-picture-producer
 
+### How to implement face recognition with OpenCV and scala
+- https://beachape.com/blog/2016/03/14/scala-and-opencv-ep-2-akka-face-detector/
