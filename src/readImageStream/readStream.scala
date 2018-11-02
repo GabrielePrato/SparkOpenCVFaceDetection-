@@ -43,19 +43,17 @@ object readStream {
 
     // Convert to RDD because DataFrame causes errors: https://issues.apache.org/jira/browse/SPARK-17890
     val raw_images_rdd: RDD[Row] = raw_images.rdd
-    //raw_images_rdd.collect().foreach(println)
 
     // apply row2mat, return tuple (path, mat)
     val orig_images = raw_images_rdd.map(rowToMat)
 
-    // orig_images.collect().foreach(println)
-
-
     // Convert to grayscale, return tuple (path, mat)
     val gray_images = orig_images.map(toGreyScale);
 
-    // Save to file.
+    // This line is just for testing and error detection
     gray_images.collect.foreach(println)
+
+    // Save to file.
     gray_images.map(writeToFile)
 
     System.out.println("Stopping")
