@@ -20,7 +20,7 @@ public class ImagesToHDFS {
         String filename = "person_001.png";
 
         // Read the file first from local Disk
-        String originalFile = "/Users/philipclaesson/ML/DIC/project/data/INRIAPerson/Test/pos/" + filename;
+        String originalFile = "./data/INRIAPerson/Test/pos/" + filename;
         byte[] imageFileInBytes = FileUtils.readFileToByteArray(new File(originalFile));
 
         // Write the image to HDFS
@@ -30,7 +30,7 @@ public class ImagesToHDFS {
         outputStream.close();
 
         // Read it back from HDFS + Write to another location local FS
-        String localFileSystemDestinationPath = "/Users/philipclaesson/ML/DIC/project/data/testout/" + filename;
+        String localFileSystemDestinationPath = "./data/testout/" + filename;
         FSDataOutputStream localOutputStream = fs.create(new Path(localFileSystemDestinationPath));
 
         FSDataInputStream inputStream = fs.open(new Path(destinationPath));

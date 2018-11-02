@@ -33,7 +33,7 @@ object readStream {
     // Reduce the log messages. We don't want Spark filling the console, except in case of error.
     sc.setLogLevel("ERROR")
 
-    val raw_images = readImages("/Users/philipclaesson/ML/DIC/project/data/INRIAPerson/Test/two_images/")
+    val raw_images = readImages("./data/INRIAPerson/Test/two_images/")
 
     // Print the schema of images
     raw_images.printSchema()
