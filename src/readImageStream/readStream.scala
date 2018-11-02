@@ -12,7 +12,7 @@ import org.apache.spark.sql._
 //import org.opencv.imgproc._
 import org.bytedeco.javacpp.opencv_core._
 import org.bytedeco.javacpp._
-import org.bytedeco.javacpp.opencv_core.Mat
+// import org.bytedeco.javacpp.opencv_core.Mat
 // import ImageContainer._
 import FaceDetector._
 // import java.nio.file.Paths
@@ -64,9 +64,6 @@ object readStream {
 
     flow.run()
     */
-
-    // detect and draw faces
-    // do stuff here
 
     System.out.println("Stopping")
 

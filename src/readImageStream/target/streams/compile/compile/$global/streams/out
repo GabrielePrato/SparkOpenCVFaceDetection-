@@ -7,13 +7,13 @@
 [0m[[0m[31merror[0m] [0m[0m/Users/philipclaesson/ML/DIC/project/src/readImageStream/readStream.scala:55:28: not found: type FaceDetector[0m
 [0m[[0m[31merror[0m] [0m[0m    val faceDetector = new FaceDetector[0m
 [0m[[0m[31merror[0m] [0m[0m                           ^[0m
-[0m[[0m[31merror[0m] [0m[0m/Users/philipclaesson/ML/DIC/project/src/readImageStream/readStream.scala:95:41: ambiguous reference to overloaded definition,[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/philipclaesson/ML/DIC/project/src/readImageStream/readStream.scala:92:41: ambiguous reference to overloaded definition,[0m
 [0m[[0m[31merror[0m] [0m[0mboth method decode in class Decoder of type (x$1: java.nio.ByteBuffer)java.nio.ByteBuffer[0m
 [0m[[0m[31merror[0m] [0m[0mand  method decode in class Decoder of type (x$1: String)Array[Byte][0m
 [0m[[0m[31merror[0m] [0m[0mmatch argument types (Nothing)[0m
 [0m[[0m[31merror[0m] [0m[0m        val bytes = Base64.getDecoder().decode(row.getAs("data"))[0m
 [0m[[0m[31merror[0m] [0m[0m                                        ^[0m
-[0m[[0m[31merror[0m] [0m[0m/Users/philipclaesson/ML/DIC/project/src/readImageStream/readStream.scala:97:19: ambiguous reference to overloaded definition,[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/philipclaesson/ML/DIC/project/src/readImageStream/readStream.scala:94:19: ambiguous reference to overloaded definition,[0m
 [0m[[0m[31merror[0m] [0m[0mboth constructor Mat in class Mat of type (x$1: org.bytedeco.javacpp.opencv_core.Mat, x$2: org.bytedeco.javacpp.opencv_core.Range, x$3: org.bytedeco.javacpp.opencv_core.Range)org.bytedeco.javacpp.opencv_core.Mat[0m
 [0m[[0m[31merror[0m] [0m[0mand  constructor Mat in class Mat of type (x$1: Array[Int], x$2: Int, x$3: org.bytedeco.javacpp.Pointer)org.bytedeco.javacpp.opencv_core.Mat[0m
 [0m[[0m[31merror[0m] [0m[0mmatch argument types (Nothing,Nothing,Nothing)[0m
