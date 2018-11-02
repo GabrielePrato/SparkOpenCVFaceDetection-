@@ -1,0 +1,22 @@
+[0m[[0m[31merror[0m] [0m[0m/Users/philipclaesson/ML/DIC/project/src/readImageStream/readStream.scala:17:8: not found: object FaceDetector[0m
+[0m[[0m[31merror[0m] [0m[0mimport FaceDetector._[0m
+[0m[[0m[31merror[0m] [0m[0m       ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/philipclaesson/ML/DIC/project/src/readImageStream/readStream.scala:46:32: Unable to find encoder for type stored in a Dataset.  Primitive types (Int, String, etc) and Product types (case classes) are supported by importing spark.implicits._  Support for serializing other types will be added in future releases.[0m
+[0m[[0m[31merror[0m] [0m[0m    val images = raw_images.map(row2mat)[0m
+[0m[[0m[31merror[0m] [0m[0m                               ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/philipclaesson/ML/DIC/project/src/readImageStream/readStream.scala:55:28: not found: type FaceDetector[0m
+[0m[[0m[31merror[0m] [0m[0m    val faceDetector = new FaceDetector[0m
+[0m[[0m[31merror[0m] [0m[0m                           ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/philipclaesson/ML/DIC/project/src/readImageStream/readStream.scala:95:41: ambiguous reference to overloaded definition,[0m
+[0m[[0m[31merror[0m] [0m[0mboth method decode in class Decoder of type (x$1: java.nio.ByteBuffer)java.nio.ByteBuffer[0m
+[0m[[0m[31merror[0m] [0m[0mand  method decode in class Decoder of type (x$1: String)Array[Byte][0m
+[0m[[0m[31merror[0m] [0m[0mmatch argument types (Nothing)[0m
+[0m[[0m[31merror[0m] [0m[0m        val bytes = Base64.getDecoder().decode(row.getAs("data"))[0m
+[0m[[0m[31merror[0m] [0m[0m                                        ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/philipclaesson/ML/DIC/project/src/readImageStream/readStream.scala:97:19: ambiguous reference to overloaded definition,[0m
+[0m[[0m[31merror[0m] [0m[0mboth constructor Mat in class Mat of type (x$1: org.bytedeco.javacpp.opencv_core.Mat, x$2: org.bytedeco.javacpp.opencv_core.Range, x$3: org.bytedeco.javacpp.opencv_core.Range)org.bytedeco.javacpp.opencv_core.Mat[0m
+[0m[[0m[31merror[0m] [0m[0mand  constructor Mat in class Mat of type (x$1: Array[Int], x$2: Int, x$3: org.bytedeco.javacpp.Pointer)org.bytedeco.javacpp.opencv_core.Mat[0m
+[0m[[0m[31merror[0m] [0m[0mmatch argument types (Nothing,Nothing,Nothing)[0m
+[0m[[0m[31merror[0m] [0m[0m        val img = new Mat(height, width, ocvType)[0m
+[0m[[0m[31merror[0m] [0m[0m                  ^[0m
+[0m[[0m[31merror[0m] [0m[0m5 errors found[0m

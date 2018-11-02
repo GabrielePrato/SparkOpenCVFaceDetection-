@@ -1,4 +1,0 @@
-[0m[[0m[31merror[0m] [0m[0m/Users/philipclaesson/ML/DIC/project/src/loadImageStream/loadImageStream.scala:24:9: value sparkContext is not a member of org.apache.spark.SparkContext[0m
-[0m[[0m[31merror[0m] [0m[0m     sc.sparkContext.setLogLevel("ERROR")[0m
-[0m[[0m[31merror[0m] [0m[0m        ^[0m
-[0m[[0m[31merror[0m] [0m[0mone error found[0m

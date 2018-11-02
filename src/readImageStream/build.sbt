@@ -1,11 +1,11 @@
 name := "Face Detection Project"
 version := "1.0"
-scalaVersion := "2.11.8"
+scalaVersion := "2.11.12"
 libraryDependencies ++= Seq(
-  "org.apache.spark" %% "spark-core" % "2.2.1",
-  "org.apache.spark" % "spark-streaming_2.11" % "2.2.1",
-  "org.apache.spark" % "spark-streaming-kafka-0-8_2.11" % "2.2.1",
-  "org.apache.spark" % "spark-streaming-kafka-0-10_2.11" % "2.2.0",
-  ("com.datastax.spark" %% "spark-cassandra-connector" % "2.0.2").exclude("io.netty", "netty-handler"),
-  ("com.datastax.cassandra" % "cassandra-driver-core" % "3.0.0").exclude("io.netty", "netty-handler")
+  "org.apache.spark" %% "spark-core" % "2.3.1",
+  "org.apache.spark" % "spark-streaming_2.11" % "2.3.1",
+  "org.apache.spark" %% "spark-mllib" % "2.3.1",
+  "org.bytedeco" % "javacv" % "1.4.3",
+  "org.bytedeco" % "javacpp" % "1.4.3"
 )
+

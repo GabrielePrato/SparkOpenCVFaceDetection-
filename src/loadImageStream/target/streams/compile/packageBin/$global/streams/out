@@ -1,9 +1,0 @@
-[0m[[0m[0minfo[0m] [0m[0mPackaging /Users/philipclaesson/ML/DIC/project/src/loadImageStream/target/scala-2.11/load-image-stream_2.11-1.0.jar ...[0m
-[0m[[0m[0mdebug[0m] [0m[0mInput file mappings:[0m
-[0m[[0m[0mdebug[0m] [0m[0m	LoadImageStream$$anonfun$main$1.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m	  /Users/philipclaesson/ML/DIC/project/src/loadImageStream/target/scala-2.11/classes/LoadImageStream$$anonfun$main$1.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m	LoadImageStream$.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m	  /Users/philipclaesson/ML/DIC/project/src/loadImageStream/target/scala-2.11/classes/LoadImageStream$.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m	LoadImageStream.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m	  /Users/philipclaesson/ML/DIC/project/src/loadImageStream/target/scala-2.11/classes/LoadImageStream.class[0m
-[0m[[0m[0minfo[0m] [0m[0mDone packaging.[0m

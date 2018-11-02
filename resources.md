@@ -15,3 +15,6 @@
 
 ### How to implement face recognition with OpenCV and scala
 - https://beachape.com/blog/2016/03/14/scala-and-opencv-ep-2-akka-face-detector/
+
+### Basics about Scala ML Images support
+- https://blogs.technet.microsoft.com/machinelearning/2018/03/05/image-data-support-in-apache-spark/
