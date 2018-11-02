@@ -8,4 +8,4 @@ libraryDependencies ++= Seq(
   "org.bytedeco" % "javacv" % "1.4.3",
   "org.bytedeco" % "javacpp" % "1.4.3"
 )
-
+fork in run := true

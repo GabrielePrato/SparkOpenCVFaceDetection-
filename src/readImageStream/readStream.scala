@@ -8,10 +8,15 @@ import org.apache.spark.storage.StorageLevel
 import org.apache.spark.ml.image.ImageSchema
 import org.apache.spark.ml.image.ImageSchema._
 import org.apache.spark.sql._
-//import org.opencv.imgproc._
-import org.bytedeco.javacpp.opencv_core._
+import org.apache.spark.rdd._
 import org.bytedeco.javacpp._
-// import org.bytedeco.javacpp.opencv_core.Mat
+import org.bytedeco.javacpp.opencv_core._
+import org.bytedeco.javacv.{OpenCVFrameConverter, Java2DFrameConverter}
+import java.nio.ByteBuffer
+import java.io.File
+import javax.imageio.ImageIO
+import java.awt.image.{BufferedImage, DataBufferByte}
+
 // import ImageContainer._
 //import FaceDetector._
 // import java.nio.file.Paths
@@ -24,83 +29,79 @@ object readStream {
     // Set topic to read from
     val topic = Set("images")
 
-    val sparkConf = new SparkConf().setAppName("SparkFaceDetection").setMaster("local[2]")
+    // Create sparksession
+    val ss = SparkSession.builder
+      .master("local[2]")
+      .appName("SparkFaceDetection")
+      .getOrCreate()
+    import ss.implicits._
 
-    // Create a StreamingContext, batchduration could be 5s subject to change.
-    val sc = SparkContext.getOrCreate(sparkConf)
-
-    // Reduce the log messages. We don't want Spark filling the console, except in case of error.
-    sc.setLogLevel("ERROR")
-
-    val raw_images = readImages("./data/INRIAPerson/Test/two_images/")
+    val raw_images = readImages("./../../data/INRIAPerson/Test/two_images/")
 
     // Print the schema of images
     raw_images.printSchema()
 
+    // Convert to RDD because DataFrame causes errors: https://issues.apache.org/jira/browse/SPARK-17890
+    val raw_images_rdd: RDD[Row] = raw_images.rdd
+    //raw_images_rdd.collect().foreach(println)
 
-    /**
-    * We need to convert imported images to Mat format.
-    * Below rows do not work.
-    */
+    // apply row2mat, return tuple (path, mat)
+    val orig_images = raw_images_rdd.map(rowToMat)
 
-      /*
-    val images = raw_images.map(row2mat)
+    // orig_images.collect().foreach(println)
 
-    // Using general Mat object for functionality instead.
-    // val images = new Set(new Mat(640, 480))
 
-    // Convert to grayscale
-    val grayImages = images.map(toGreyScale);
+    // Convert to grayscale, return tuple (path, mat)
+    val gray_images = orig_images.map(toGreyScale);
 
-    // Create FaceDetector object
-    val faceDetector = new FaceDetector
-*/
-
-    // from here not done yet, need to be implemented. But we should start with getting the images to work.
-    /*
-    val flow = images
-      .map(faceDetector.detect)
-      .map((faceDrawer.drawFaces _).tupled)
-      .to(Sink.ignore)
-
-    flow.run()
-    */
+    // Save to file.
+    gray_images.collect.foreach(println)
+    gray_images.map(writeToFile)
 
     System.out.println("Stopping")
 
   }
-      def toGreyScale(mat: Mat): Mat = {
-        val greyMat = {
-          val (rows, cols) = (mat.rows(), mat.cols())
-          new Mat(rows, cols, CV_8U)
-        }
-        opencv_imgproc.cvtColor(mat, greyMat, opencv_imgproc.COLOR_BGR2GRAY, 1) // COLOR_BGR2GRAY = 6
-        greyMat
-      }
-
-      def row2mat(row: Row): (String, Mat) = {
-        /*
-        val path    = row.getAs("path")
-        val height  = row.getAs("height")
-        val width  = row.getAs("width")
-        val ocvType = row.getAs("mode")
-*/
-        val path    = row.getAs("path")
-        val height  = ImageSchema.getHeight(row)
-        val width  = ImageSchema.getWidth(row)
+      def rowToMat(row: Row): (String, Mat) = {
+        val path = row.getAs("path") // Getting errors here now:
+        val height = ImageSchema.getHeight(row)
+        val width = ImageSchema.getWidth(row)
         val ocvType = ImageSchema.getMode(row)
-
-        /** This creates an error:
-        ambiguous reference to overloaded definition,
-        [error] both method decode in class Decoder of type (x$1: java.nio.ByteBuffer)java.nio.ByteBuffer
-        [error] and  method decode in class Decoder of type (x$1: String)Array[Byte]
-        */
-        // implicit val .......
         val bytes = Base64.getDecoder().decode(ImageSchema.getData(row))
 
-        val img = new Mat(height, width, ocvType)
-        img.put(0,0,bytes)
+        // Create byte buffer
+        val bb = ByteBuffer.wrap(bytes)
+        // Create a pointer to the bytebuffer to include in the mat
+        val p = new Pointer(bb)
+        // Construct mat
+        val img = new Mat(height, width, ocvType, p)
+
+        System.out.print("Converted to mat")
         (path, img)
+      }
+      def toGreyScale(orig: (String, Mat)): (String, Mat) = {
+        val path = orig._1
+        val orig_mat = orig._2
+
+        // Get dimensions of img and create gray matrix of same dimension
+        val dimensions = new Size(orig_mat.rows(), orig_mat.cols())
+        val grey_mat = new Mat(dimensions, CV_8U)
+
+        // Create grayscale img
+        opencv_imgproc.cvtColor(orig_mat, grey_mat, opencv_imgproc.COLOR_BGR2GRAY, 1) // COLOR_BGR2GRAY = 6
+        (path, grey_mat)
+      }
+
+      def writeToFile(img: (String, Mat)) = {
+        val path = img._1
+        val mat = img._2
+        // val image = Mat.convert(mat)
+        val m2fConverter = new OpenCVFrameConverter.ToOrgOpenCvCoreMat()
+        val frame = m2fConverter.convert(mat)
+
+        val f2iConverter = new Java2DFrameConverter()
+        val image = f2iConverter.convert(frame)
+        ImageIO.write(image, "png", new File("test_output.png"))
+        System.out.print("Wrote to file")
       }
 
 }
