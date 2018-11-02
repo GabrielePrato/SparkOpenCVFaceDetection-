@@ -16,10 +16,6 @@ import java.nio.ByteBuffer
 import java.io.File
 import javax.imageio.ImageIO
 import java.awt.image.{BufferedImage, DataBufferByte}
-
-// import ImageContainer._
-//import FaceDetector._
-// import java.nio.file.Paths
 import java.util.{Date, Properties}
 
 
@@ -92,7 +88,6 @@ object readStream {
       def writeToFile(img: (String, Mat)) = {
         val path = img._1
         val mat = img._2
-        // val image = Mat.convert(mat)
         val m2fConverter = new OpenCVFrameConverter.ToOrgOpenCvCoreMat()
         val frame = m2fConverter.convert(mat)
 
@@ -101,8 +96,4 @@ object readStream {
         ImageIO.write(image, "png", new File("test_output.png"))
         System.out.print("Wrote to file")
       }
-
 }
-
-// holder for a single detected face: contains face rectangle and the two eye rectangles inside
-case class Face(id: Int, faceRect: Rect, leftEyeRect: Rect, rightEyeRect: Rect)
