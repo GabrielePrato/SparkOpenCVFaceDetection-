@@ -92,7 +92,7 @@ object readStream {
         [error] and  method decode in class Decoder of type (x$1: String)Array[Byte]
         */
         // implicit val .......
-        val bytes = Base64.getDecoder().decode(row.getAs("data"))
+        val bytes = row.getAs("data") //Base64.getDecoder().decode(row.getAs("data"))
 
         val img = new Mat(height, width, ocvType)
         img.put(0,0,bytes)
