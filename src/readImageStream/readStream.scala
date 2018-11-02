@@ -1,4 +1,3 @@
-package sparkstreaming
 
 import java.util.HashMap
 import java.util.Base64
@@ -14,7 +13,7 @@ import org.bytedeco.javacpp.opencv_core._
 import org.bytedeco.javacpp._
 // import org.bytedeco.javacpp.opencv_core.Mat
 // import ImageContainer._
-import FaceDetector._
+//import FaceDetector._
 // import java.nio.file.Paths
 import java.util.{Date, Properties}
 
@@ -33,16 +32,18 @@ object readStream {
     // Reduce the log messages. We don't want Spark filling the console, except in case of error.
     sc.setLogLevel("ERROR")
 
-    val raw_images = readImages("/Users/philipclaesson/ML/DIC/project/data/INRIAPerson/Test/two_images/")
+    val raw_images = readImages("./data/INRIAPerson/Test/two_images/")
 
     // Print the schema of images
     raw_images.printSchema()
+
 
     /**
     * We need to convert imported images to Mat format.
     * Below rows do not work.
     */
 
+      /*
     val images = raw_images.map(row2mat)
 
     // Using general Mat object for functionality instead.
@@ -53,7 +54,7 @@ object readStream {
 
     // Create FaceDetector object
     val faceDetector = new FaceDetector
-
+*/
 
     // from here not done yet, need to be implemented. But we should start with getting the images to work.
     /*
@@ -78,10 +79,16 @@ object readStream {
       }
 
       def row2mat(row: Row): (String, Mat) = {
+        /*
         val path    = row.getAs("path")
         val height  = row.getAs("height")
-        val width   = row.getAs("width")
+        val width  = row.getAs("width")
         val ocvType = row.getAs("mode")
+*/
+        val path    = row.getAs("path")
+        val height  = ImageSchema.getHeight(row)
+        val width  = ImageSchema.getWidth(row)
+        val ocvType = ImageSchema.getMode(row)
 
         /** This creates an error:
         ambiguous reference to overloaded definition,
@@ -89,7 +96,7 @@ object readStream {
         [error] and  method decode in class Decoder of type (x$1: String)Array[Byte]
         */
         // implicit val .......
-        val bytes = Base64.getDecoder().decode(row.getAs("data"))
+        val bytes = Base64.getDecoder().decode(ImageSchema.getData(row))
 
         val img = new Mat(height, width, ocvType)
         img.put(0,0,bytes)
