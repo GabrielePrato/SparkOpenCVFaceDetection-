@@ -40,16 +40,16 @@ object readStream {
 
   // Local directories sample data for testing
 
-
+/*
   val INPUT_DIR = "./../data/SAMPLE_INPUT/"
   val OUTPUT_DIR = "./../data/SAMPLE_OUTPUT/"
-
+*/
 
   // HDFS directories
-/*
+
   val INPUT_DIR = "hdfs://127.0.0.1:9000/images"
   val OUTPUT_DIR = "hdfs://127.0.0.1:9000/output"
-*/
+
 
   // Set hadoop username in order to gain write permission.
   // without it you can not write to HDFS.
