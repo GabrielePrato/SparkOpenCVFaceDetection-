@@ -25,10 +25,6 @@ $HADOOP_HOME/bin/hdfs dfs -put ./data/SAMPLE_INPUT/* /images
 - Run face detection
 `sbt run` in `/src`
 
-Note! .jar and .dylib file for OpenCV should be in the src directory, otherwise there is a risk of getting a java.lang.UnsatisfiedLinkError. See [how to install](https://opencv-java-tutorials.readthedocs.io/en/latest/01-installing-opencv-for-java.html) and [more info](https://github.com/opencv/opencv/tree/master/samples/java/sbt).
+#### Note!
+.jar and .dylib file for OpenCV should be in the src directory, otherwise there is a risk of getting a java.lang.UnsatisfiedLinkError. See [how to install](https://opencv-java-tutorials.readthedocs.io/en/latest/01-installing-opencv-for-java.html) and [more info](https://github.com/opencv/opencv/tree/master/samples/java/sbt).
 
-
-- Add images to /images in HDFS, for example:
-```
-$HADOOP_HOME/bin/hdfs dfs -put ./data/SAMPLE_INPUT/* /images
-```
