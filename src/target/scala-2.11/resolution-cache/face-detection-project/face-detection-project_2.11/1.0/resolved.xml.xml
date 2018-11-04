@@ -4,7 +4,7 @@
 		module="face-detection-project_2.11"
 		revision="1.0"
 		status="integration"
-		publication="20181022185815"
+		publication="20181104152423"
 	>
 		<description>
 		Face Detection Project
@@ -30,17 +30,13 @@
 		<artifact name="face-detection-project_2.11" type="doc" ext="jar" conf="compile" e:classifier="javadoc"/>
 	</publications>
 	<dependencies>
-		<dependency org="org.scala-lang" name="scala-compiler" rev="2.11.8" conf="scala-tool->default,optional(default)"/>
-		<dependency org="org.scala-lang" name="scala-library" rev="2.11.8" conf="scala-tool->default,optional(default);compile->default(compile)"/>
-		<dependency org="org.apache.spark" name="spark-core_2.11" rev="2.2.1" conf="compile->default(compile)"/>
-		<dependency org="org.apache.spark" name="spark-streaming_2.11" rev="2.2.1" conf="compile->default(compile)"/>
-		<dependency org="org.apache.spark" name="spark-streaming-kafka-0-8_2.11" rev="2.2.1" conf="compile->default(compile)"/>
-		<dependency org="org.apache.spark" name="spark-streaming-kafka-0-10_2.11" rev="2.2.0" conf="compile->default(compile)"/>
-		<dependency org="com.datastax.spark" name="spark-cassandra-connector_2.11" rev="2.0.2" conf="compile->default(compile)">
-			<exclude org="io.netty" module="netty-handler" name="*" type="*" ext="*" conf="" matcher="exact"/>
-		</dependency>
-		<dependency org="com.datastax.cassandra" name="cassandra-driver-core" rev="3.0.0" conf="compile->default(compile)">
-			<exclude org="io.netty" module="netty-handler" name="*" type="*" ext="*" conf="" matcher="exact"/>
-		</dependency>
+		<dependency org="org.scala-lang" name="scala-compiler" rev="2.11.12" conf="scala-tool->default,optional(default)"/>
+		<dependency org="org.scala-lang" name="scala-library" rev="2.11.12" conf="scala-tool->default,optional(default);compile->default(compile)"/>
+		<dependency org="org.apache.spark" name="spark-core_2.11" rev="2.3.1" conf="compile->default(compile)"/>
+		<dependency org="org.apache.spark" name="spark-streaming_2.11" rev="2.3.1" conf="compile->default(compile)"/>
+		<dependency org="org.apache.spark" name="spark-mllib_2.11" rev="2.3.1" conf="compile->default(compile)"/>
+		<dependency org="org.bytedeco" name="javacv" rev="1.4.3" conf="compile->default(compile)"/>
+		<dependency org="org.bytedeco" name="javacpp" rev="1.4.3" conf="compile->default(compile)"/>
+		<dependency org="org.apache.hadoop" name="hadoop-client" rev="2.9.0" conf="compile->default(compile)"/>
 	</dependencies>
 </ivy-module>

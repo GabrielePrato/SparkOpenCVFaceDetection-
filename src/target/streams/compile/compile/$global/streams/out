@@ -1,11 +1,10 @@
-[0m[[0m[31merror[0m] [0m[0m/Users/philipclaesson/ML/DIC/project/src/readImageStream2.scala:55:33: value split is not a member of Byte[0m
-[0m[[0m[31merror[0m] [0m[0m    val words = lines.flatMap(_.split(" "))[0m
-[0m[[0m[31merror[0m] [0m[0m                                ^[0m
-[0m[[0m[31merror[0m] [0m[0m/Users/philipclaesson/ML/DIC/project/src/readImageStream2.scala:56:31: diverging implicit expansion for type scala.math.Ordering[T1][0m
-[0m[[0m[31merror[0m] [0m[0mstarting with method Tuple9 in object Ordering[0m
-[0m[[0m[31merror[0m] [0m[0m    val wordCounts = words.map(x => (x, 1L)).reduceByKey(_ + _)[0m
-[0m[[0m[31merror[0m] [0m[0m                              ^[0m
-[0m[[0m[31merror[0m] [0m[0m/Users/philipclaesson/ML/DIC/project/src/readImageStream2.scala:56:46: value reduceByKey is not a member of org.apache.spark.streaming.dstream.DStream[(Nothing, Long)][0m
-[0m[[0m[31merror[0m] [0m[0m    val wordCounts = words.map(x => (x, 1L)).reduceByKey(_ + _)[0m
-[0m[[0m[31merror[0m] [0m[0m                                             ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/philipclaesson/ML/DIC/project/src/readStream.scala:191:24: not found: type Path[0m
+[0m[[0m[31merror[0m] [0m[0m        val path = new Path(filePath)[0m
+[0m[[0m[31merror[0m] [0m[0m                       ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/philipclaesson/ML/DIC/project/src/readStream.scala:192:24: not found: type Configuration[0m
+[0m[[0m[31merror[0m] [0m[0m        val conf = new Configuration()[0m
+[0m[[0m[31merror[0m] [0m[0m                       ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/philipclaesson/ML/DIC/project/src/readStream.scala:194:18: not found: value FileSystem[0m
+[0m[[0m[31merror[0m] [0m[0m        val fs = FileSystem.get(conf)[0m
+[0m[[0m[31merror[0m] [0m[0m                 ^[0m
 [0m[[0m[31merror[0m] [0m[0mthree errors found[0m
