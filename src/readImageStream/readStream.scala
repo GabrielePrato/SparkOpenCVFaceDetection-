@@ -41,7 +41,7 @@ object readStream {
     val raw_images_rdd: RDD[Row] = raw_images.rdd
 
     // apply row2mat, return tuple (path, mat)
-    val orig_images = raw_images_rdd.map(rowToMat)
+    val orig_images = raw_images_rdd.map(x => rowToMat(x))
 
     // Convert to grayscale, return tuple (path, mat)
     val gray_images = orig_images.map(toGreyScale);
@@ -56,11 +56,16 @@ object readStream {
 
   }
       def rowToMat(row: Row): (String, Mat) = {
-        val path = row.getAs("path") // Getting errors here now:
-        val height = ImageSchema.getHeight(row)
-        val width = ImageSchema.getWidth(row)
-        val ocvType = ImageSchema.getMode(row)
-        val bytes = Base64.getDecoder().decode(ImageSchema.getData(row))
+        // val path = row.getAs("path") // Getting errors here now:
+        System.out.println(row.get(0))
+        System.out.println(row)
+
+        val image = row.copy()
+        val path = ImageSchema.getOrigin(image)
+        val height = ImageSchema.getHeight(image)
+        val width = ImageSchema.getWidth(image)
+        val ocvType = ImageSchema.getMode(image)
+        val bytes = Base64.getDecoder().decode(ImageSchema.getData(image))
 
         // Create byte buffer
         val bb = ByteBuffer.wrap(bytes)
@@ -72,6 +77,7 @@ object readStream {
         System.out.print("Converted to mat")
         (path, img)
       }
+
       def toGreyScale(orig: (String, Mat)): (String, Mat) = {
         val path = orig._1
         val orig_mat = orig._2
