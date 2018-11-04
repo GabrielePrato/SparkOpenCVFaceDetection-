@@ -1,4 +1,3 @@
-
 import java.util.HashMap
 import java.util.Base64
 import org.apache.spark.SparkConf
@@ -9,19 +8,37 @@ import org.apache.spark.ml.image.ImageSchema
 import org.apache.spark.ml.image.ImageSchema._
 import org.apache.spark.sql._
 import org.apache.spark.rdd._
-import org.bytedeco.javacpp._
-import org.bytedeco.javacpp.opencv_core._
+
+
+import org.opencv.core.Core
+import org.opencv.core.CvType
+import org.opencv.core.Mat
+import org.opencv.core.MatOfByte
+import org.opencv.core.MatOfPoint
+import org.opencv.core.MatOfRect
+import org.opencv.core.Point
+import org.opencv.core.Rect
+import org.opencv.core.Scalar
+import org.opencv.core.Size
+
 import org.bytedeco.javacv.{OpenCVFrameConverter, Java2DFrameConverter}
+
+import org.opencv.imgproc.Imgproc
+import org.opencv.imgcodecs.Imgcodecs
+import org.opencv.objdetect.CascadeClassifier
+
 import java.nio.ByteBuffer
 import java.io.File
 import javax.imageio.ImageIO
 import java.awt.image.{BufferedImage, DataBufferByte}
 import java.util.{Date, Properties}
-
+import java.awt.Graphics2D
 
 
 object readStream {
   def main(args: Array[String]) {
+    // System.load("/opencv-343.jar");
+    System.loadLibrary(Core.NATIVE_LIBRARY_NAME)
 
     // Set topic to read from
     val topic = Set("images")
@@ -41,7 +58,11 @@ object readStream {
     // Convert to RDD because DataFrame causes errors: https://issues.apache.org/jira/browse/SPARK-17890
     val raw_images_rdd: RDD[Row] = raw_images.rdd
 
+    // Print to see row structure
+    raw_images_rdd.take(2).foreach(println)
+
     // apply row2mat, return tuple (path, mat)
+
     val orig_images = raw_images_rdd.map(x => rowToMat(x))
 
     // Convert to grayscale, return tuple (path, mat)
@@ -57,19 +78,19 @@ object readStream {
 
   }
       def rowToMat(row: Row): (String, Mat) = {
-        //val path = row.getAs("path") // Getting errors here now:
-        val path  = row.getString(0)
-        val height = ImageSchema.getHeight(row)
-        val width = ImageSchema.getWidth(row)
-        val ocvType = ImageSchema.getMode(row)
-        val bytes = Base64.getDecoder().decode(ImageSchema.getData(row))
+        // Get image
+        val image = row.get(0).asInstanceOf[Row]
 
-        // Create byte buffer
-        val bb = ByteBuffer.wrap(bytes)
-        // Create a pointer to the bytebuffer to include in the mat
-        val p = new Pointer(bb)
+        // Get image attributes and data
+        val path = ImageSchema.getOrigin(image)
+        val height = ImageSchema.getHeight(image)
+        val width = ImageSchema.getWidth(image)
+        val ocvType = ImageSchema.getMode(image)
+        val bytes = ImageSchema.getData(image)
+
         // Construct mat
-        val img = new Mat(height, width, ocvType, p)
+        val img = new Mat(height, width, ocvType)
+        img.put(0, 0, bytes)
 
         System.out.print("Converted to mat")
         (path, img)
@@ -81,10 +102,10 @@ object readStream {
 
         // Get dimensions of img and create gray matrix of same dimension
         val dimensions = new Size(orig_mat.rows(), orig_mat.cols())
-        val grey_mat = new Mat(dimensions, CV_8U)
+        val grey_mat = new Mat(dimensions, CvType.CV_8U)
 
         // Create grayscale img
-        opencv_imgproc.cvtColor(orig_mat, grey_mat, opencv_imgproc.COLOR_BGR2GRAY, 1) // COLOR_BGR2GRAY = 6
+        Imgproc.cvtColor(orig_mat, grey_mat, Imgproc.COLOR_BGR2GRAY, 1) // COLOR_BGR2GRAY = 6
         (path, grey_mat)
       }
 
@@ -94,11 +115,11 @@ object readStream {
 
         //create new equalized Mat
         val equal = new Mat()
-        opencv_imgproc.equalizeHist(grey, equal)
+        Imgproc.equalizeHist(grey, equal)
         (path, equal)
       }
 
-      def faceDetector(equalized: (String, Mat)): (String, Rect) = {
+      def faceDetector(equalized: (String, Mat)): (String, MatOfRect) = {
         val path = equalized._1
         val equal = equalized._2
 
@@ -106,41 +127,33 @@ object readStream {
         val classLoader = this.getClass.getClassLoader
         val faceXml = classLoader.getResource("haarcascade_frontalface_alt.xml").getPath
         val faceCascade = new CascadeClassifier(faceXml)
-        val faceRects = new Rect()
+        val faceRects = new MatOfRect()
         faceCascade.detectMultiScale(equal, faceRects)
         (path, faceRects)
       }
 
-      def BoundaryDrawer(rect: (String, Rect), orig: (Mat)): (String, Any) = {
+      def BoundaryDrawer(rect: (String, MatOfRect), orig: (Mat)): (String, Mat) = {
         val path = rect._1
         val rectangles = rect._2
 
         //draw squares surrounding detected faces
         val image = orig
-        val RedColour = new Scalar(AbstractCvScalar.RED)
-        //val graphics = image.getGraphics
-        //graphics.setColor(Color.RED)
-        //graphics.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 18))
 
-        rectangle(
-          image,
-          new Point(rectangles.x, rectangles.y),
-          new Point(rectangles.x + rectangles.width, rectangles.y + rectangles.height),
-          RedColour,
-          1,
-          CV_AA,
-          0
-        )
-
-/*
-        for(i <- 0L until rectangles.limit()) {
-          val faceRect = rectangles.position(i)
-          graphics.drawRect(faceRect.x, faceRect.y, faceRect.width, faceRect.height)
+        for(r <- rectangles) {
+          /*
+          rectangle(
+            image,
+            new Point(r.x, r.y),
+            new Point(r.x + r.width, r.y + r.height),
+            AbstractCvScalar.RED,
+            1,
+            CV_AA,
+            0
+          )
+          */
         }
-        */
-        //ImageIO.write(image, &quot;jpg&quot;, new File(&quot;output_faces.jpg&quot;))
-        //TODO integrate with writing in hdfs
-        ("test", 0)
+
+        (path, image)
       }
 
       def writeToFile(img: (String, Mat)) = {

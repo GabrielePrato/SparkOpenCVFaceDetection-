@@ -1,26 +1,13 @@
-[0m[[0m[31merror[0m] [0m[0m/Users/philipclaesson/ML/DIC/project/src/readImageStream/readStream.scala:64:42: type mismatch;[0m
-[0m[[0m[31merror[0m] [0m[0m found   : Any[0m
-[0m[[0m[31merror[0m] [0m[0m required: org.apache.spark.sql.Row[0m
-[0m[[0m[31merror[0m] [0m[0m        val path = ImageSchema.getOrigin(image)[0m
-[0m[[0m[31merror[0m] [0m[0m                                         ^[0m
-[0m[[0m[31merror[0m] [0m[0m/Users/philipclaesson/ML/DIC/project/src/readImageStream/readStream.scala:65:44: type mismatch;[0m
-[0m[[0m[31merror[0m] [0m[0m found   : Any[0m
-[0m[[0m[31merror[0m] [0m[0m required: org.apache.spark.sql.Row[0m
-[0m[[0m[31merror[0m] [0m[0m        val height = ImageSchema.getHeight(image)[0m
-[0m[[0m[31merror[0m] [0m[0m                                           ^[0m
-[0m[[0m[31merror[0m] [0m[0m/Users/philipclaesson/ML/DIC/project/src/readImageStream/readStream.scala:66:42: type mismatch;[0m
-[0m[[0m[31merror[0m] [0m[0m found   : Any[0m
-[0m[[0m[31merror[0m] [0m[0m required: org.apache.spark.sql.Row[0m
-[0m[[0m[31merror[0m] [0m[0m        val width = ImageSchema.getWidth(image)[0m
-[0m[[0m[31merror[0m] [0m[0m                                         ^[0m
-[0m[[0m[31merror[0m] [0m[0m/Users/philipclaesson/ML/DIC/project/src/readImageStream/readStream.scala:67:43: type mismatch;[0m
-[0m[[0m[31merror[0m] [0m[0m found   : Any[0m
-[0m[[0m[31merror[0m] [0m[0m required: org.apache.spark.sql.Row[0m
-[0m[[0m[31merror[0m] [0m[0m        val ocvType = ImageSchema.getMode(image)[0m
-[0m[[0m[31merror[0m] [0m[0m                                          ^[0m
-[0m[[0m[31merror[0m] [0m[0m/Users/philipclaesson/ML/DIC/project/src/readImageStream/readStream.scala:68:68: type mismatch;[0m
-[0m[[0m[31merror[0m] [0m[0m found   : Any[0m
-[0m[[0m[31merror[0m] [0m[0m required: org.apache.spark.sql.Row[0m
-[0m[[0m[31merror[0m] [0m[0m        val bytes = Base64.getDecoder().decode(ImageSchema.getData(image))[0m
-[0m[[0m[31merror[0m] [0m[0m                                                                   ^[0m
-[0m[[0m[31merror[0m] [0m[0m5 errors found[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/philipclaesson/ML/DIC/project/src/readImageStream/readStream.scala:142:18: value foreach is not a member of org.opencv.core.MatOfRect[0m
+[0m[[0m[31merror[0m] [0m[0m        for(r <- rectangles) {[0m
+[0m[[0m[31merror[0m] [0m[0m                 ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/philipclaesson/ML/DIC/project/src/readImageStream/readStream.scala:143:11: not found: value rectangle[0m
+[0m[[0m[31merror[0m] [0m[0m          rectangle([0m
+[0m[[0m[31merror[0m] [0m[0m          ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/philipclaesson/ML/DIC/project/src/readImageStream/readStream.scala:147:13: not found: value AbstractCvScalar[0m
+[0m[[0m[31merror[0m] [0m[0m            AbstractCvScalar.RED,[0m
+[0m[[0m[31merror[0m] [0m[0m            ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/philipclaesson/ML/DIC/project/src/readImageStream/readStream.scala:149:13: not found: value CV_AA[0m
+[0m[[0m[31merror[0m] [0m[0m            CV_AA,[0m
+[0m[[0m[31merror[0m] [0m[0m            ^[0m
+[0m[[0m[31merror[0m] [0m[0mfour errors found[0m
