@@ -19,6 +19,7 @@ import java.awt.image.{BufferedImage, DataBufferByte}
 import java.util.{Date, Properties}
 
 
+
 object readStream {
   def main(args: Array[String]) {
 
@@ -56,16 +57,12 @@ object readStream {
 
   }
       def rowToMat(row: Row): (String, Mat) = {
-        // val path = row.getAs("path") // Getting errors here now:
-        System.out.println(row.get(0))
-        System.out.println(row)
-
-        val image = row.copy()
-        val path = ImageSchema.getOrigin(image)
-        val height = ImageSchema.getHeight(image)
-        val width = ImageSchema.getWidth(image)
-        val ocvType = ImageSchema.getMode(image)
-        val bytes = Base64.getDecoder().decode(ImageSchema.getData(image))
+        //val path = row.getAs("path") // Getting errors here now:
+        val path  = row.getString(0)
+        val height = ImageSchema.getHeight(row)
+        val width = ImageSchema.getWidth(row)
+        val ocvType = ImageSchema.getMode(row)
+        val bytes = Base64.getDecoder().decode(ImageSchema.getData(row))
 
         // Create byte buffer
         val bb = ByteBuffer.wrap(bytes)
@@ -89,6 +86,61 @@ object readStream {
         // Create grayscale img
         opencv_imgproc.cvtColor(orig_mat, grey_mat, opencv_imgproc.COLOR_BGR2GRAY, 1) // COLOR_BGR2GRAY = 6
         (path, grey_mat)
+      }
+
+      def histogramEqualizer(grey_img: (String, Mat)): (String, Mat) = {
+        val path = grey_img._1
+        val grey = grey_img._2
+
+        //create new equalized Mat
+        val equal = new Mat()
+        opencv_imgproc.equalizeHist(grey, equal)
+        (path, equal)
+      }
+
+      def faceDetector(equalized: (String, Mat)): (String, Rect) = {
+        val path = equalized._1
+        val equal = equalized._2
+
+        //operate the detection
+        val classLoader = this.getClass.getClassLoader
+        val faceXml = classLoader.getResource("haarcascade_frontalface_alt.xml").getPath
+        val faceCascade = new CascadeClassifier(faceXml)
+        val faceRects = new Rect()
+        faceCascade.detectMultiScale(equal, faceRects)
+        (path, faceRects)
+      }
+
+      def BoundaryDrawer(rect: (String, Rect), orig: (Mat)): (String, Any) = {
+        val path = rect._1
+        val rectangles = rect._2
+
+        //draw squares surrounding detected faces
+        val image = orig
+        val RedColour = new Scalar(AbstractCvScalar.RED)
+        //val graphics = image.getGraphics
+        //graphics.setColor(Color.RED)
+        //graphics.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 18))
+
+        rectangle(
+          image,
+          new Point(rectangles.x, rectangles.y),
+          new Point(rectangles.x + rectangles.width, rectangles.y + rectangles.height),
+          RedColour,
+          1,
+          CV_AA,
+          0
+        )
+
+/*
+        for(i <- 0L until rectangles.limit()) {
+          val faceRect = rectangles.position(i)
+          graphics.drawRect(faceRect.x, faceRect.y, faceRect.width, faceRect.height)
+        }
+        */
+        //ImageIO.write(image, &quot;jpg&quot;, new File(&quot;output_faces.jpg&quot;))
+        //TODO integrate with writing in hdfs
+        ("test", 0)
       }
 
       def writeToFile(img: (String, Mat)) = {
