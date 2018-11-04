@@ -18,3 +18,14 @@
 
 ### Basics about Scala ML Images support
 - https://blogs.technet.microsoft.com/machinelearning/2018/03/05/image-data-support-in-apache-spark/
+
+
+### Nice demo of faceDetector in Scala, within the opencv library
+- https://github.com/opencv/opencv/blob/master/samples/java/sbt/src/main/scala/ScalaDetectFaceDemo.scala
+
+
+### How to install OpenCV jar
+Follow instructions in:
+- https://opencv-java-tutorials.readthedocs.io/en/latest/01-installing-opencv-for-java.html
+
+- Move the files (.jar and .dylib) into the same directory as the sbt file. 

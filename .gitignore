@@ -1,3 +1,6 @@
 data/INRIAPerson/**
 
 !data/INRIAPerson/.gitkeep
+
+.jar
+.dylib
