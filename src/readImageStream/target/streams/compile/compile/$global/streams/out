@@ -1,4 +1,4 @@
-[0m[[0m[31merror[0m] [0m[0m/Users/philipclaesson/ML/DIC/project/src/readImageStream/readStream.scala:142:18: value foreach is not a member of org.opencv.core.MatOfRect[0m
-[0m[[0m[31merror[0m] [0m[0m        for(r <- rectangles) {[0m
-[0m[[0m[31merror[0m] [0m[0m                 ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/philipclaesson/ML/DIC/project/src/readImageStream/readStream.scala:142:13: not found: value AbstractCvScalar[0m
+[0m[[0m[31merror[0m] [0m[0m            AbstractCvScalar.RED,[0m
+[0m[[0m[31merror[0m] [0m[0m            ^[0m
 [0m[[0m[31merror[0m] [0m[0mone error found[0m

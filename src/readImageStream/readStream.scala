@@ -58,18 +58,12 @@ object readStream {
     // Convert to RDD because DataFrame causes errors: https://issues.apache.org/jira/browse/SPARK-17890
     val raw_images_rdd: RDD[Row] = raw_images.rdd
 
-    // Print to see row structure
-    raw_images_rdd.take(2).foreach(println)
-
     // apply row2mat, return tuple (path, mat)
 
     val orig_images = raw_images_rdd.map(x => rowToMat(x))
 
     // Convert to grayscale, return tuple (path, mat)
-    val gray_images = orig_images.map(toGreyScale);
-
-    // This line is just for testing and error detection
-    gray_images.collect.foreach(println)
+    val gray_images = orig_images.map(x => toGreyScale(x));
 
     // Save to file.
     gray_images.map(writeToFile)
@@ -133,27 +127,20 @@ object readStream {
       }
 
       def BoundaryDrawer(rect: (String, MatOfRect), orig: (Mat)): (String, Mat) = {
+        //draw squares surrounding detected faces
         val path = rect._1
         val rectangles = rect._2
-
-        //draw squares surrounding detected faces
         val image = orig
-/*
-        for(r <- rectangles) {
 
-          rectangle(
+        // for each rectangle (corresponding to a detected face): draw a rectangle
+        for(r <- rectangles.toArray) {
+          Imgproc.rectangle(
             image,
             new Point(r.x, r.y),
             new Point(r.x + r.width, r.y + r.height),
-            AbstractCvScalar.RED,
-            1,
-            CV_AA,
-            0
+            new Scalar(0, 255, 0)
           )
-
         }
-        */
-
         (path, image)
       }
 
