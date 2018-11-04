@@ -138,9 +138,9 @@ object readStream {
 
         //draw squares surrounding detected faces
         val image = orig
-
+/*
         for(r <- rectangles) {
-          /*
+
           rectangle(
             image,
             new Point(r.x, r.y),
@@ -150,8 +150,9 @@ object readStream {
             CV_AA,
             0
           )
-          */
+
         }
+        */
 
         (path, image)
       }
