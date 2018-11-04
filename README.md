@@ -27,4 +27,3 @@ $HADOOP_HOME/bin/hdfs dfs -put ./data/SAMPLE_INPUT/* /images
 
 #### Note!
 .jar and .dylib file for OpenCV should be in the src directory, otherwise there is a risk of getting a java.lang.UnsatisfiedLinkError. See [how to install](https://opencv-java-tutorials.readthedocs.io/en/latest/01-installing-opencv-for-java.html) and [more info](https://github.com/opencv/opencv/tree/master/samples/java/sbt).
-
